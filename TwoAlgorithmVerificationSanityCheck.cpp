@@ -19,8 +19,47 @@ using testing::Test;
 //    3) Runs BoyerMoore and ZalgorithmBasedMatching and checks results are identical
 // Use <random> & uniform_int_distribution for your random number generation
 TEST(TwoAlgorithmVerificationSanityCheck, SubstringMatchesInRandomString) {
-  const std::string Sigma = "abcdefghijklmnopqrstuvwxyz";
-  // TODO: implement this.
+   const std::string Sigma = "abcdefghijklmnopqrstuvwxyz";
+   std::default_random_engine generator;
+   std::uniform_int_distribution<int> letterDistribution(0, 25);
+   std::uniform_int_distribution<int> substringDistribution(1, RANDOM_STRING_SIZE);
+   for (int i = 0; i < NUM_TEST_CASES; i++) {
+       std::string T = " ";
+       for (int j = 0; j < RANDOM_STRING_SIZE; j++) {
+           T.push_back('a' + letterDistribution(generator));
+       }
+       int start = substringDistribution(generator), end = substringDistribution(generator);
+       if (start > end) {
+           std::swap(start, end);
+       }
+       std::string P = " " + T.substr(start, end);
+
+       std::list<int> ZMatches;
+       std::list<int> BMMatches;
+
+       ZalgorithmBasedMatching(P, T, &ZMatches);
+       BoyerMoore(P, T, Sigma, &BMMatches);
+
+       ZMatches.sort();
+       BMMatches.sort();
+
+       if (BMMatches.size() == ZMatches.size()) {
+           std::list<int>::iterator BMIt = BMMatches.begin();
+           std::list<int>::iterator ZIt = ZMatches.begin();
+           while (BMIt != BMMatches.end()&&  ZIt != ZMatches.end()){
+               /*if(*BMIt != *ZIt){
+                   //std::cout << "P: " << P << "\nT: " << T << '\n'; //for debugging
+               }*/
+
+               EXPECT_EQ(*BMIt, *ZIt);
+               ZIt++;
+               BMIt++;
+           }
+       } else {
+           ASSERT_EQ(BMMatches.size() == ZMatches.size(), true);
+       }
+   }
+   // TODO: implement this.
 }
 
 // Sanity check for BoyerMoore & ZalgorithmBasedMatching
@@ -30,11 +69,48 @@ TEST(TwoAlgorithmVerificationSanityCheck, SubstringMatchesInRandomString) {
 //    3) Runs BoyerMoore and ZalgorithmBasedMatching and checks results are identical
 // Use <random> & uniform_int_distribution for your random number generation
 TEST(TwoAlgorithmVerificationSanityCheck, RandomSubstringVsRandomString) {
-  const std::string Sigma = "abcdefghijklmnopqrstuvwxyz";
-  // TODO: implement this.
+   const std::string Sigma = "abcdefghijklmnopqrstuvwxyz";
+   std::default_random_engine generator;
+   std::uniform_int_distribution<int> letterDistribution(0, 25);
+   std::uniform_int_distribution<int> substringDistribution(1, RANDOM_STRING_SIZE);
+   for (int i = 0; i < NUM_TEST_CASES; i++) {
+       std::string T = " ";
+       for (int j = 0; j < RANDOM_STRING_SIZE; j++) {
+           T.push_back('a' + letterDistribution(generator));
+       }
+       std::string P = " ";
+       for (int j = 0; j < RANDOM_SUBSTRING_SIZE; j++) {
+           P.push_back('a' + letterDistribution(generator));
+       }
+
+       std::list<int> ZMatches;
+       std::list<int> BMMatches;
+
+       ZalgorithmBasedMatching(P, T, &ZMatches);
+       BoyerMoore(P, T, Sigma, &BMMatches);
+
+       ZMatches.sort();
+       BMMatches.sort();
+
+       if (BMMatches.size() == ZMatches.size()) {
+           std::list<int>::iterator BMIt = BMMatches.begin();
+           std::list<int>::iterator ZIt = ZMatches.begin();
+           while (BMIt != BMMatches.end()&&  ZIt != ZMatches.end()){
+               /*if(*BMIt != *ZIt){
+                   std::cout << "P: " << P << "\nT: " << T << '\n'; //for debugging
+               }*/
+
+               EXPECT_EQ(*BMIt, *ZIt);
+               ZIt++;
+               BMIt++;
+           }
+       } else {
+           ASSERT_EQ(BMMatches.size() == ZMatches.size(), true);
+       }
+   }
 }
 
 int main(int argc, char** argv) {
-   testing::InitGoogleTest(&argc, argv);
-   return RUN_ALL_TESTS();
+    testing::InitGoogleTest(&argc, argv);
+    return RUN_ALL_TESTS();
 }

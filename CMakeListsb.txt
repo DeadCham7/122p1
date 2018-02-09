@@ -1,0 +1,8 @@
+cmake_minimum_required(VERSION 3.2)
+
+set(BOYERMOORE_SRCS ../BoyerMoore.cpp ../BoyerMoore.h ../BoyerMoorePreprocessing.cpp ../BoyerMoorePreprocessing.h)
+set(LIB_TYPE STATIC)
+########## Create libraries
+#ADD_DEPENDENCIES(BoyerMooreLib libZalgorithmLib)
+add_library(BoyerMooreLib ${LIB_TYPE} ${BOYERMOORE_SRCS})
+########## TODO: Add library for BoyerMoore here (call it BoyerMooreLib)

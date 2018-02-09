@@ -32,6 +32,7 @@ TEST(ZalgorithmSanityCheck, SubstringMatchesInRandomString) {
     std::string P = " " + T.substr(start, end);
     std::list<int> matches;
     ZalgorithmBasedMatching(P, T, &matches);
+
     EXPECT_GE(matches.size(), 1);
   }
 }

@@ -17,7 +17,24 @@ using testing::Test;
 //    3) Runs BoyerMoore and checks there is at least one match
 // Use <random> & uniform_int_distribution for your random number generation
 TEST(BoyerMooreSanityCheck, SubstringMatchesInRandomString) {
-  // TODO: Implement this
+   const std::string Sigma = "abcdefghijklmnopqrstuvwxyz";
+   std::default_random_engine generator;
+   std::uniform_int_distribution<int> letterDistribution(0, 25);
+   std::uniform_int_distribution<int> substringDistribution(1, RANDOM_STRING_SIZE);
+   for (int i = 0; i < NUM_TEST_CASES; i++) {
+      std::string T = " ";
+      for (int j = 0; j < RANDOM_STRING_SIZE; j++) {
+         T.push_back('a' + letterDistribution(generator));
+      }
+      int start = substringDistribution(generator), end = substringDistribution(generator);
+      if (start > end) {
+         std::swap(start, end);
+      }
+      std::string P = " " + T.substr(start, end);
+      std::list<int> matches;
+      BoyerMoore(P, T, Sigma, &matches);
+      EXPECT_GE(matches.size(), 1);
+   }
 }
 
 int main(int argc, char** argv) {

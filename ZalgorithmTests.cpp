@@ -7,74 +7,43 @@ using testing::Test;
 
 // Testing MatchLength calculation when no matches occur
 TEST(MatchLengthTest, NoMatchTest) {
-    bool checker = 1;
-    if (MatchLength(const std::string& S, int i, int j) < 1) {
-        checker = 0;
-    }
-    
-    EXPECT_EQ(checker,0);
-  // TODO: Implement this
+    EXPECT_EQ(MatchLength(" assas",1,3),0);
 }
 
 // Testing MatchLength calculation when geginning of string matches
 TEST(MatchLengthTest, BeginningStringMatch) {
-    bool checker = 0;
-    if (MatchLength(const std::string& S, int i, int j) == 1) {
-        checker = 1;
-    }
-    
-    EXPECT_EQ(checker, 1);
-  // TODO: Implement this
+EXPECT_EQ(MatchLength(" assas",1,1),5);
 }
 
 // Testing MatchLength calculation when middle of the string matches
 TEST(MatchLengthTest, MidStringMatch) {
-    bool checker = 0;
-    
-    if (S.length() % 2 !=0 && (S.length()/2+1 == MatchLength(const std::string& S, int i, int j))) {
-        checker = 1;
-    }
-    
-    EXPECT_EQ(checker, 1);
-  // TODO: Implement this
+EXPECT_EQ(MatchLength(" asdasd",1,4),3);
 }
 
 // Testing MatchLength calculation when match stops at end of string
 TEST(MatchLengthTest, EndOfStringMatch) {
-    bool checker = 0;
-    
-    if (S.length() == MatchLength(const std::string& S, int i, int j)) {
-        checker = 1;
-    }
-    
-    EXPECT_EQ(checker, 1);
-  // TODO: Implement this
+EXPECT_EQ(MatchLength(" asdfgha",1,7),1);
 }
-
 // Testing Zalgorithm calculation with string S = " aabcaabxaaz", p.7 Gusfield
 TEST(ZalgorithmTest, GusfieldExamplePageSeven) {
-    std::list<int>* Z;
-    std::string S = " aabcaabxaaz";
-    int[] CheckArray = [1,0,0,3,1,0,0,2,2,1,0],
-    int count;
-    int i = 0;
-    bool checker = 0;
-    Zalgorithm(S, Z);
-    std::list<int>*::iterator it;
-    
-    for (it = Z.begin(); it != Z.end();it++) {
-        if (checkArray[i] == *it) {
-            count++;
-        }
-        i++;
-    }
-    if (count == Z.length()) {
-        checker = 1;
-    }
-    
-    EXPECT_EQ(checker, 1);
-  // TODO: Implement this. Check only values given in the text
+std::vector<int> Z;
+Zalgorithm(" aabcaabxaaz", &Z);
+EXPECT_EQ(3,Z.at(5));
 }
+
+TEST(ZalgorithmBasedMatching,randomexample){
+std::list<int> matches;
+ZalgorithmBasedMatching("aab","baabaa",&matches);
+std::list<int>::iterator i = matches.begin();
+EXPECT_EQ(*i,2);
+}
+
+TEST(ZalgorithmBasedMatchingwithsize,randomexample2){
+    std::list<int> matches;
+    ZalgorithmBasedMatching(" fznrgkbfetdmqlqbgzotlrzbvqbdqdugcielhwbsbvehtftxnwrqsvouuthpjymnexowvebvtqzg"," xlkrmxhdmqfznrgkbfetdmqlqbgzotlrzbvqbdqdugcielhwbsbvehtftxnwrqsvouuthpjymnexowvebvtqzgqithojhellmsve",&matches);
+    EXPECT_GE(matches.size(), 1);
+}
+
 
 int main(int argc, char** argv) {
    testing::InitGoogleTest(&argc, argv);
